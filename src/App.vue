@@ -104,9 +104,10 @@
     <!-- This conditional template renders all caught pokemon-->
     <template v-else-if="flags.showTeam === true">
       <div
-        class="pokecard"
+        class="pokecard inline-block bg-slate-400 m-4 p-5 rounded"
         v-for="pokemon in pokedex.listTeam"
         :key="pokemon.name"
+        @click="details(pokemon)"
       >
         <h2>{{ pokemon.name }}</h2>
         <img
@@ -115,18 +116,7 @@
           v-if="pokedex.listTeam.includes(pokemon)"
         />
         <img :src="pokemon.img" alt="" />
-        <p
-          v-for="(type, i) in pokemon.types"
-          :key="i"
-          class="type-badge"
-          :class="type"
-        >
-          {{ type }}
-        </p>
-        <div v-for="stat in pokemon.stats" :key="stat.name">
-          <h5>{{ stat.name }}</h5>
-          <span>: {{ stat.points }}</span>
-        </div>
+
         <div
           class="button"
           v-if="!pokedex.listTeam.includes(pokemon)"
@@ -140,9 +130,10 @@
     <!-- This conditional template renders all missing pokemon-->
     <template v-else-if="flags.showMissing === true">
       <div
-        class="pokecard"
+        class="pokecard inline-block bg-slate-400 m-4 p-5 rounded"
         v-for="pokemon in pokedex.listMissing"
         :key="pokemon.name"
+        @click="details(pokemon)"
       >
         <h2>{{ pokemon.name }}</h2>
         <img
@@ -171,7 +162,12 @@
 
     <!-- This conditional template renders the search result-->
     <template v-else-if="flags.showSingle === true">
-      <div class="pokecard" v-for="pokemon in queryResult" :key="pokemon.name">
+      <div
+        class="pokecard inline-block bg-slate-400 m-4 p-5 rounded"
+        v-for="pokemon in queryResult"
+        :key="pokemon.name"
+        @click="details(pokemon)"
+      >
         <h2>{{ pokemon.name }}</h2>
         <img
           src="../public/pokeball-icon.png"
