@@ -4,12 +4,12 @@
     <!--Primary navigation & Filters-->
     <nav class="mx-auto w-4/5 flex justify-start items-center py-2">
       <!-- Toggle all pokemon template-->
-      <h1
+      <a
         class="text-white font-bold uppercase text-2xl mr-5 hover:text-emerald-500 cursor-pointer transition-all"
         @click="showAll"
       >
         Pokedex
-      </h1>
+      </a>
 
       <div class="flex flex-grow mr-16 justify-between items-center">
         <ul class="flex flex-row mt-1">
@@ -18,7 +18,7 @@
             class="px-2 mr-5 text-white hover:text-emerald-500 cursor-pointer transition-all"
             @click="showTeam"
           >
-            Captured pokemon
+            <a href="#">Captured pokemon</a>
           </li>
 
           <!-- Toggle missing pokemon template-->
@@ -26,7 +26,7 @@
             class="px-2 text-white hover:text-emerald-500 cursor-pointer transition-all"
             @click="showMissing"
           >
-            Missing pokemon
+            <a href="#">Missing pokemon</a>
           </li>
         </ul>
 
@@ -66,18 +66,19 @@
   </header>
 
   <!--Main content-->
-  <main class="w-2/3 mx-auto grid grid-cols-3 gap-x-0.5 gap-y-2">
+  <main class="w-2/3 mx-auto grid grid-cols-4 gap-x-0.5 gap-y-2">
     <!--This conditional template renders all pokemon-->
     <template v-if="flags.showAll === true">
       <!--PokeCard-->
-      <div
-        class="pokecard inline-block bg-slate-400 m-4 p-5 rounded"
+      <a
+        href="#"
+        class="pokecard inline-block bg-slate-500 hover:bg-slate-300 m-4 p-5 rounded cursor-pointer flex justify-center items-center"
         v-for="pokemon in pokedex.listAll"
         :key="pokemon.name"
         @click="details(pokemon)"
       >
         <div class="name">
-          <h2 class="inline-block">{{ pokemon.name }}</h2>
+          <h2>{{ pokemon.name }}</h2>
           <img
             src="/pokeball-icon.png"
             alt=""
@@ -86,35 +87,27 @@
           />
         </div>
         <img :src="pokemon.img" alt="" />
-        <div class="types">
-          <p v-for="(type, i) in pokemon.types" :key="i" :class="type">
-            {{ type }}
-          </p>
-        </div>
-        <div
-          class="button"
-          v-if="!pokedex.listTeam.includes(pokemon)"
-          @click="catchPokemon(pokemon)"
-        >
-          <img src="/pokeball.png" alt="" />
-        </div>
-      </div>
+      </a>
     </template>
 
     <!-- This conditional template renders all caught pokemon-->
     <template v-else-if="flags.showTeam === true">
-      <div
-        class="pokecard inline-block bg-slate-400 m-4 p-5 rounded"
+      <a
+        href="#"
+        class="pokecard inline-block bg-slate-500 hover:bg-slate-300 m-4 p-5 rounded cursor-pointer flex justify-center items-center"
         v-for="pokemon in pokedex.listTeam"
         :key="pokemon.name"
         @click="details(pokemon)"
       >
-        <h2>{{ pokemon.name }}</h2>
-        <img
-          src="../public/pokeball-icon.png"
-          alt=""
-          v-if="pokedex.listTeam.includes(pokemon)"
-        />
+        <div class="name">
+          <h2>{{ pokemon.name }}</h2>
+          <img
+            src="../public/pokeball-icon.png"
+            class="inline-block w-3 ml-3"
+            alt=""
+            v-if="pokedex.listTeam.includes(pokemon)"
+          />
+        </div>
         <img :src="pokemon.img" alt="" />
 
         <div
@@ -124,94 +117,51 @@
         >
           <img src="/pokeball.png" alt="" />
         </div>
-      </div>
+      </a>
     </template>
 
     <!-- This conditional template renders all missing pokemon-->
     <template v-else-if="flags.showMissing === true">
-      <div
-        class="pokecard inline-block bg-slate-400 m-4 p-5 rounded"
+      <a
+        href="#"
+        class="pokecard inline-block bg-slate-500 hover:bg-slate-300 m-4 p-5 rounded cursor-pointer flex justify-center items-center"
         v-for="pokemon in pokedex.listMissing"
         :key="pokemon.name"
         @click="details(pokemon)"
       >
-        <h2>{{ pokemon.name }}</h2>
-        <img
-          src="/pokeball-icon.png"
-          alt=""
-          v-if="pokedex.listTeam.includes(pokemon)"
-        />
-        <img :src="pokemon.img" alt="" />
-        <p
-          v-for="(type, i) in pokemon.types"
-          :key="i"
-          class="type-badge"
-          :class="type"
-        >
-          {{ type }}
-        </p>
-        <div
-          class="button"
-          v-if="!pokedex.listTeam.includes(pokemon)"
-          @click="catchPokemon(pokemon)"
-        >
-          <img src="/pokeball.png" alt="" />
+        <div class="name">
+          <h2>{{ pokemon.name }}</h2>
+          <img
+            src="/pokeball-icon.png"
+            class="inline-block w-3 ml-3"
+            alt=""
+            v-if="pokedex.listTeam.includes(pokemon)"
+          />
         </div>
-      </div>
-    </template>
-
-    <!-- This conditional template renders the search result-->
-    <template v-else-if="flags.showSingle === true">
-      <div
-        class="pokecard inline-block bg-slate-400 m-4 p-5 rounded"
-        v-for="pokemon in queryResult"
-        :key="pokemon.name"
-        @click="details(pokemon)"
-      >
-        <h2>{{ pokemon.name }}</h2>
-        <img
-          src="../public/pokeball-icon.png"
-          alt=""
-          v-if="pokedex.listTeam.includes(pokemon)"
-        />
         <img :src="pokemon.img" alt="" />
-        <p
-          v-for="(type, i) in pokemon.types"
-          :key="i"
-          class="type-badge"
-          :class="type"
-        >
-          {{ type }}
-        </p>
-        <div
-          class="button"
-          v-if="!pokedex.listTeam.includes(pokemon)"
-          @click="catchPokemon(pokemon)"
-        >
-          <img src="/pokeball.png" alt="" />
-        </div>
-      </div>
+      </a>
     </template>
   </main>
   <!--This conditional template renders the details of the selected pokemon-->
   <template v-if="flags.showDetails === true">
     <div
-      class="pokeDetails w-2/3 mx-auto p-20 flex justify-center"
+      class="pokeDetails w-3/5 mx-auto p-20 flex justify-between"
       v-for="pokemon in pokedex.details"
       :key="pokemon.name"
     >
-      <div class="details__left">
+      <div class="details__left flex align-center w-1/3">
         <img :src="pokemon.big_img" alt="" class="max-w-xs" />
       </div>
-      <div class="details__right ml-10">
+
+      <div class="details__right ml-10 w-1/3">
         <p class="text-slate-400">#{{ pokemon.id }}</p>
-        <h2 class="text-2xl text-emerald-400 display-inline">
+        <h2 class="text-2xl text-emerald-400 display-inline my-3 font-bold">
           {{ pokemon.name }}
         </h2>
 
         <span
           v-if="this.pokedex.listTeam.includes(pokemon)"
-          class="bg-green-100 text-green-800 text-sm font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-green-200 dark:text-green-900"
+          class="bg-green-100 text-green-800 text-sm font-medium px-2.5 py-0.5 my-3 rounded dark:bg-green-200 dark:text-green-900"
           >&check; Captured</span
         ><span
           v-else
@@ -219,14 +169,6 @@
           >&cross; Missing</span
         >
 
-        <div class="type">
-          <span
-            v-for="(type, i) in pokemon.types"
-            :key="i"
-            class="bg-blue-100 text-blue-800 text-xs font-semibold mr-2 px-2.5 py-0.5 rounded dark:bg-blue-200 dark:text-blue-800"
-            >{{ type }}</span
-          >
-        </div>
         <div
           class="mt-3 text-white text-sm"
           v-for="stat in pokemon.stats"
@@ -238,13 +180,26 @@
         <!--Back to pokedex button-->
         <button
           type="button"
-          class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-2 py-1 mt-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
+          class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-2 py-1 my-3 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
           @click="showAll"
         >
           &leftarrow; Pok&eacute;dex
         </button>
+
+        <!--Catch this pokemon button-->
+        <button
+          type="button"
+          class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm ml-3 px-2 py-1 mt-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
+          v-if="!pokedex.listTeam.includes(pokemon)"
+          @click="catchPokemon(pokemon)"
+        >
+          catch it!
+        </button>
       </div>
     </div>
+    <p class="description text-center text-slate-300 font-semibold">
+      {{ flavorText }}
+    </p>
   </template>
 
   <!--Footer-->
@@ -267,7 +222,7 @@ export default {
     return {
       pokemonCount: 898,
       input: "",
-      queryResult: [],
+      flavorText: "",
       pokedex: {
         listAll: [],
         listTeam: [],
@@ -278,7 +233,6 @@ export default {
         showAll: true,
         showTeam: false,
         showMissing: false,
-        showSingle: false,
         showDetails: false,
       },
     };
@@ -294,31 +248,25 @@ export default {
       this.flags["showAll"] = true;
       this.flags["showTeam"] = false;
       this.flags["showMissing"] = false;
-      this.flags["showSingle"] = false;
       this.flags["showDetails"] = false;
     },
     showTeam() {
       this.flags["showAll"] = false;
       this.flags["showTeam"] = true;
       this.flags["showMissing"] = false;
-      this.flags["showSingle"] = false;
       this.flags["showDetails"] = false;
     },
     showMissing() {
       this.flags["showAll"] = false;
       this.flags["showTeam"] = false;
       this.flags["showMissing"] = true;
-      this.flags["showSingle"] = false;
       this.flags["showDetails"] = false;
     },
     showSingle() {
-      this.flags["showAll"] = false;
-      this.flags["showTeam"] = false;
-      this.flags["showMissing"] = false;
-      this.flags["showSingle"] = true;
-      this.flags["showDetails"] = false;
+      this.showDetails();
     },
     showDetails() {
+      this.getDescription();
       this.flags["showAll"] = false;
       this.flags["showTeam"] = false;
       this.flags["showMissing"] = false;
@@ -331,21 +279,35 @@ export default {
       return normalization;
     },
     search($event) {
-      this.queryResult = [];
-      this.showSingle();
+      this.pokedex.details = [];
 
       let query = $event.target.value;
       let normalizedQuery = this.normalizeQuery(query);
 
       for (let i = 0; i < this.pokedex.listAll.length; i++) {
-        if (this.pokedex.listAll[i].name.match(normalizedQuery))
-          this.queryResult.push(this.pokedex.listAll[i]);
+        if (this.pokedex.listAll[i].name.match(normalizedQuery)) {
+          this.pokedex.details.push(this.pokedex.listAll[i]);
+        }
       }
+
+      this.showDetails();
     },
     details(pkm) {
       this.pokedex.details = [];
       this.pokedex.details.push(pkm);
       this.showDetails();
+    },
+    async getDescription() {
+      let id = this.pokedex.details[0].id;
+      let url = "https://pokeapi.co/api/v2/pokemon-species/" + id;
+
+      await axios.get(url).then((descriptions) => {
+        descriptions.data.flavor_text_entries.map((desc) => {
+          if (desc.language.name === "en") {
+            this.flavorText = desc.flavor_text;
+          }
+        });
+      });
     },
   },
   async created() {
@@ -398,3 +360,9 @@ export default {
   },
 };
 </script>
+
+<style>
+.pokecard {
+  transition: all 0.2s;
+}
+</style>
