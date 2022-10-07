@@ -145,15 +145,15 @@
   <!--This conditional template renders the details of the selected pokemon-->
   <template v-if="flags.showDetails === true">
     <div
-      class="pokeDetails w-3/5 mx-auto p-20 flex justify-between"
+      class="pokeDetails w-3/5 mx-auto px-20 pt-20 pb-10 grid grid-cols-2"
       v-for="pokemon in pokedex.details"
       :key="pokemon.name"
     >
-      <div class="details__left flex align-center w-1/3">
+      <div class="details__left flex align-center col-span-1">
         <img :src="pokemon.big_img" alt="" class="max-w-xs" />
       </div>
 
-      <div class="details__right ml-10 w-1/3">
+      <div class="details__right ml-44 col-span-1">
         <p class="text-slate-400">#{{ pokemon.id }}</p>
         <h2 class="text-2xl text-emerald-400 display-inline my-3 font-bold">
           {{ pokemon.name }}
@@ -196,10 +196,13 @@
           catch it!
         </button>
       </div>
+
+      <p
+        class="description display-block max-w-1/2 pt-10 text-center text-slate-300 font-semibold col-span-2"
+      >
+        {{ flavorText }}
+      </p>
     </div>
-    <p class="description text-center text-slate-300 font-semibold">
-      {{ flavorText }}
-    </p>
   </template>
 
   <!--Footer-->
